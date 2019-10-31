@@ -1,0 +1,132 @@
+package com.example.moviles
+
+import android.annotation.SuppressLint
+import android.os.AsyncTask
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_clase2.*
+import kotlinx.android.synthetic.main.activity_clase2_segunda.*
+import kotlinx.android.synthetic.main.activity_clase3.*
+import java.lang.ref.WeakReference
+import android.R.id.edit
+import android.content.SharedPreferences
+import androidx.core.app.ComponentActivity
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
+
+class Clase3 : AppCompatActivity() {
+
+    val TAG = "Clase3"
+    var active = false
+    var counter = 0
+
+    //agregar sharedPreferences que guarde estado del contador al cerrar y volver a abrir la app
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_clase3)
+
+
+        //mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        counter = mPreferences.getInt("counter")
+        counterText.text = counter.toString()
+
+        stop.isEnabled = false
+        //counterText.text = 0.toString() BORRAR!!!!!!!!!!!!!!!!
+
+        start.setOnClickListener {
+            val counterAsync = counterAsyncTask(this)
+            counterAsync.execute()
+        }
+
+        stop.setOnClickListener {
+            active = false
+            stop.isEnabled = false
+        }
+
+        resetButton.setOnClickListener{
+            counter = 0
+            counterText.text = counter.toString()
+        }
+
+
+    }
+
+
+        class counterAsyncTask internal constructor(context: Clase3) : AsyncTask<Void, Int, Void>()
+        //class counterAsyncTask(private var activity: Clase3?) : AsyncTask<Void, Int, Void>()
+        {
+
+                private val activityReference: WeakReference<Clase3> = WeakReference(context)
+
+                @SuppressLint("WrongThread")
+                override fun doInBackground(vararg params: Void): Void? {
+
+                    val activity = activityReference.get()
+                    if (activity == null || activity.isFinishing) return null
+
+                    var step = activity.stepInput.text.toString()
+
+                    if (step.isEmpty())
+                        step = 1.toString() // por defecto el step es 1
+
+                    val time = step.toLong().times(1000) //convierto a long y lo multiplico por 1000 para pasarlo a millis
+
+                    while(activity.active) {
+                        time.let { Thread.sleep(time) }
+                        publishProgress(activity.counter++) // Calls onProgressUpdate()
+                    }
+
+                    return null
+                }
+
+                override fun onProgressUpdate(vararg values: Int?) {
+
+                    val activity = activityReference.get()
+                    if (activity == null || activity.isFinishing) return
+
+                    activity.counterText.text = values[0].toString()
+                }
+
+                override fun onPreExecute() {
+                    val activity = activityReference.get()
+                    if (activity == null || activity.isFinishing) return
+
+                    activity.stop.isEnabled = true
+                    activity.active = true
+
+                }
+
+            }
+
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("counterText",counterText.text.toString())
+
+        stop.isEnabled = false
+        active = false
+    }
+
+    public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val value = savedInstanceState.getString("counterText")
+        if (value != null)
+            counterText.text = value
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val preferencesEditor = mPreferences.edit()
+        preferencesEditor.putInt("count", mCount)
+        preferencesEditor.putInt("color", mCurrentColor)
+        preferencesEditor.apply()
+    }
+
+}

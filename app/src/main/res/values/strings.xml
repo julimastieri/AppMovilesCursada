@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Moviles</string>
+    <string name="reset">Reset</string>
+    <string name="increment">increment</string>
+    <string name="contador">Contador</string>
+    <string name="clase1">Clase1</string>
+    <string name="clase4">Clase4</string>
+    <string name="clase3">Clase3</string>
+    <string name="clase2">Clase2</string>
+    <string name="title_activity_clase1">title_activity_clase1</string>
+    <string name="title_activity_clase2">title_activity_clase2</string>
+    <string name="add">+</string>
+    <string name="resultado">Resultado:</string>
+    <string name="subtraction">-</string>
+    <string name="multiplication">*</string>
+    <string name="division">/</string>
+    <string name="ingrese_valor">Ingrese valor</string>
+    <string name="valor_2">Valor 2:</string>
+    <string name="valor_1">Valor 1:</string>
+    <string name="done">Done</string>
+    <string name="Operacion">Operacion</string>
+    <string name="stop">stop</string>
+    <string name="start">start</string>
+    <string name="step">Step:</string>
+    <string name="_1">1</string>
+</resources>
