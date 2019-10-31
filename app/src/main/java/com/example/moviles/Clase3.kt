@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_clase2_segunda.*
 import kotlinx.android.synthetic.main.activity_clase3.*
 import java.lang.ref.WeakReference
 import android.R.id.edit
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.app.ComponentActivity
 import androidx.core.app.ComponentActivity.ExtraData
@@ -25,6 +26,8 @@ class Clase3 : AppCompatActivity() {
     val TAG = "Clase3"
     var active = false
     var counter = 0
+    val sharedPrefFile = "com.example.moviles.COUNTER_INFO"
+    //var mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 
     //agregar sharedPreferences que guarde estado del contador al cerrar y volver a abrir la app
 
@@ -32,14 +35,12 @@ class Clase3 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clase3)
 
+        val mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 
-        //mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        counter = mPreferences.getInt("counter")
+        counter = mPreferences.getInt("counter", 0)
         counterText.text = counter.toString()
 
         stop.isEnabled = false
-        //counterText.text = 0.toString() BORRAR!!!!!!!!!!!!!!!!
 
         start.setOnClickListener {
             val counterAsync = counterAsyncTask(this)
@@ -123,9 +124,9 @@ class Clase3 : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        val mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
         val preferencesEditor = mPreferences.edit()
-        preferencesEditor.putInt("count", mCount)
-        preferencesEditor.putInt("color", mCurrentColor)
+        preferencesEditor.putInt("counter", counter)
         preferencesEditor.apply()
     }
 
