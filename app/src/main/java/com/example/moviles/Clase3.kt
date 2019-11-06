@@ -107,20 +107,23 @@ class Clase3 : AppCompatActivity() {
 
             }
 
+
     public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("counterText",counterText.text.toString())
 
+        outState.putString("start",active.toString())
         stop.isEnabled = false
         active = false
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val value = savedInstanceState.getString("counterText")
-        if (value != null)
-            counterText.text = value
+        var v1 = savedInstanceState.getString("start")
+
+        if (v1 == "true")
+            start.callOnClick()
     }
+
 
     override fun onPause() {
         super.onPause()

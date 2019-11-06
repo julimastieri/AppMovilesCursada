@@ -96,6 +96,7 @@ class Clase2SegundaActivity : AppCompatActivity() {
 
     }
 
+    /*
     public override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -112,10 +113,12 @@ class Clase2SegundaActivity : AppCompatActivity() {
 
 
         //ninguna de las dos formas funcionan
-        value1.text = Editable.Factory.getInstance().newEditable(v1)
+        //value1.text = Editable.Factory.getInstance().newEditable(v1)
 
-        value2.setText(v2)
+        //value2.setText(v2)
 
         }
-    }
+
+     */
+}
 
