@@ -23,4 +23,9 @@
     <string name="start">start</string>
     <string name="step">Step:</string>
     <string name="_1">1</string>
+    <string name="IntentService">Intent Service</string>
+    <string name="Service">Service</string>
+    <string name="BoundService">Bound Service</string>
+    <string name="ProcessService">Process Service:</string>
+
 </resources>

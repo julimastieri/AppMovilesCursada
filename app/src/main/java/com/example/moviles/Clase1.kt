@@ -2,11 +2,9 @@ package com.example.moviles
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_clase1.*
-import kotlinx.android.synthetic.main.activity_main.*
+
 
 class Clase1 : AppCompatActivity() {
 

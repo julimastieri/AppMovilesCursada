@@ -4,20 +4,9 @@ import android.annotation.SuppressLint
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_clase2.*
-import kotlinx.android.synthetic.main.activity_clase2_segunda.*
 import kotlinx.android.synthetic.main.activity_clase3.*
 import java.lang.ref.WeakReference
-import android.R.id.edit
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 
@@ -27,9 +16,6 @@ class Clase3 : AppCompatActivity() {
     var active = false
     var counter = 0
     val sharedPrefFile = "com.example.moviles.COUNTER_INFO"
-    //var mPreferences = getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-
-    //agregar sharedPreferences que guarde estado del contador al cerrar y volver a abrir la app
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +48,6 @@ class Clase3 : AppCompatActivity() {
 
 
         class counterAsyncTask internal constructor(context: Clase3) : AsyncTask<Void, Int, Void>()
-        //class counterAsyncTask(private var activity: Clase3?) : AsyncTask<Void, Int, Void>()
         {
 
                 private val activityReference: WeakReference<Clase3> = WeakReference(context)
