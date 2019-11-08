@@ -17,7 +17,7 @@ class Clase2 : AppCompatActivity() {
 
         //pasarle un valor que indique la operacion: FALTA!
 
-        addButton.setOnClickListener(){
+        addButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
             val operacion :String = "+"
             val bundle : Bundle = Bundle()
@@ -26,7 +26,7 @@ class Clase2 : AppCompatActivity() {
             startActivityForResult(intent, GET_RESULT)
         }
 
-        subtractionButton.setOnClickListener(){
+        subtractionButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
             val operacion :String = "-"
             val bundle : Bundle = Bundle()
@@ -35,7 +35,7 @@ class Clase2 : AppCompatActivity() {
             startActivityForResult(intent, GET_RESULT)
         }
 
-        multiplicationButton.setOnClickListener(){
+        multiplicationButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
             val operacion :String = "*"
             val bundle : Bundle = Bundle()
@@ -44,7 +44,7 @@ class Clase2 : AppCompatActivity() {
             startActivityForResult(intent, GET_RESULT)
         }
 
-        divisionButton.setOnClickListener(){
+        divisionButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
             val operacion :String = "/"
             val bundle : Bundle = Bundle()
@@ -59,7 +59,7 @@ class Clase2 : AppCompatActivity() {
         if ((requestCode == GET_RESULT) && (resultCode == Activity.RESULT_OK)) {
             var bundle = data?.extras
             var resultado = bundle?.getString("result")
-            valueTextView.setText(resultado)
+            valueTextView.text = resultado
         }
     }
 
@@ -73,6 +73,6 @@ class Clase2 : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         val value = savedInstanceState.getString("valueTextView")
         if (value != null)
-            valueTextView.setText(value)
+            valueTextView.text = value
     }
 }

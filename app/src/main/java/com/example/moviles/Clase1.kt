@@ -14,23 +14,23 @@ class Clase1 : AppCompatActivity() {
 
         var countClick: Int = 0
 
-        incrementButton.setOnClickListener() {
+        incrementButton.setOnClickListener {
             Toast.makeText(this@Clase1, "Sumaste uno", Toast.LENGTH_LONG).show()
             countClick++
-            countTextView.setText(countClick.toString())
+            countTextView.text = countClick.toString()
         }
 
-        resetButton.setOnClickListener() {
+        resetButton.setOnClickListener {
             Toast.makeText(this@Clase1, "Reseteaste el contador", Toast.LENGTH_LONG).show()
             countClick = 0
-            countTextView.setText(countClick.toString())
+            countTextView.text = countClick.toString()
         }
 
 
-        incrementButton.setOnClickListener() {
+        incrementButton.setOnClickListener {
             Toast.makeText(this@Clase1, "Sumaste uno", Toast.LENGTH_LONG).show()
             countClick++
-            countTextView.setText(countClick.toString())
+            countTextView.text = countClick.toString()
         }
     }
 }

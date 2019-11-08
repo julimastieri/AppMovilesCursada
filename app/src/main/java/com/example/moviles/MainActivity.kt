@@ -15,22 +15,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Clase1Button.setOnClickListener(){
+        Clase1Button.setOnClickListener {
             val clase1 = Intent(this, Clase1::class.java)
             startActivity(clase1)
         }
 
-        Clase2Button.setOnClickListener() {
+        Clase2Button.setOnClickListener {
             val clase2 = Intent(this, Clase2::class.java)
             startActivity(clase2)
         }
 
-        Clase3Button.setOnClickListener() {
+        Clase3Button.setOnClickListener {
             val clase3 = Intent(this, Clase3::class.java)
             startActivity(clase3)
         }
 
-        Clase4Button.setOnClickListener() {
+        Clase4Button.setOnClickListener {
             val clase4 = Intent(this, Clase4::class.java)
             startActivity(clase4)
         }

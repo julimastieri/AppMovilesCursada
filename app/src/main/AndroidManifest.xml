@@ -9,7 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Clase2SegundaActivity"></activity>
+        <service
+            android:name=".C4Service"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".C4IntentService"
+            android:exported="false" />
+
+        <activity android:name=".Clase2SegundaActivity" />
         <activity android:name=".Clase4" />
         <activity android:name=".Clase3" />
         <activity
@@ -31,9 +39,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <service android:name=".C4IntentService" />
-
     </application>
 
 </manifest>

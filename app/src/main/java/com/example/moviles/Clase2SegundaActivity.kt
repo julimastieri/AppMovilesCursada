@@ -24,24 +24,24 @@ class Clase2SegundaActivity : AppCompatActivity() {
 
         value1.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                value1.setError("No puede ser vacio")
+                value1.error = "No puede ser vacio"
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                value1.setError("No puede ser vacio")
+                value1.error = "No puede ser vacio"
             }
             override fun afterTextChanged(s: Editable) {
 
                 if (value1.text.toString().length <= 0)
-                    value1.setError("No puede ser vacio")
+                    value1.error = "No puede ser vacio"
                 else
-                    value1.setError(null)
+                    value1.error = null
             }
         })
 
         value2.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                value2.setError("No puede ser vacio")
+                value2.error = "No puede ser vacio"
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -50,9 +50,9 @@ class Clase2SegundaActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
 
                 if (value2.text.toString().length <= 0)
-                    value2.setError("No puede ser vacio")
+                    value2.error = "No puede ser vacio"
                 else
-                    value2.setError(null)
+                    value2.error = null
             }
         })
 
@@ -60,9 +60,9 @@ class Clase2SegundaActivity : AppCompatActivity() {
         var bundle = intent.extras
         var operacion = bundle?.getString("operation")
 
-        operationTextView.setText(operacion)
+        operationTextView.text = operacion
 
-        doneButton.setOnClickListener(){
+        doneButton.setOnClickListener {
 
            if ( (value1.text.toString().length > 0) && (value2.text.toString().length > 0) ) {
                intent = Intent()
