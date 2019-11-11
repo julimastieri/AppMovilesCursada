@@ -27,5 +27,6 @@
     <string name="Service">Service</string>
     <string name="BoundService">Bound Service</string>
     <string name="ProcessService">Process Service:</string>
+    <string name="random_number">Random Number:</string>
 
 </resources>

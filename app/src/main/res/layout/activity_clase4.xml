@@ -90,5 +90,25 @@
             android:text="@string/BoundService"
             android:textSize="36sp" />
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/BStextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:text="@string/random_number"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/BSResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/acme"
+                android:textSize="36sp" />
+        </TableRow>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
