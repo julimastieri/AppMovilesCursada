@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".C4Service"
+            android:name=".C4BoundService"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".C4Service"
+            android:enabled="true"
+            android:exported="true" />
         <service
             android:name=".C4IntentService"
             android:exported="false" />

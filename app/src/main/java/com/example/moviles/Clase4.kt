@@ -1,36 +1,23 @@
 package com.example.moviles
-
-import android.app.IntentService
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_clase4.*
-import android.os.ResultReceiver
-import androidx.core.provider.FontsContractCompat.Columns.RESULT_CODE_OK
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import android.content.IntentFilter
 import java.lang.ref.WeakReference
-import androidx.core.app.ComponentActivity
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
-
-
-
-
-
 
 
 class Clase4 : AppCompatActivity() {
 
-    var  mReceiver : ISReceiver = ISReceiver(this)
+    var  IntentReceiver : ISReceiver = ISReceiver(this)
+    var ServiceReciver : SReceiver = SReceiver(this)
     companion object {
-        const val FILTER_ACTION_KEY = "any_key"
+        const val FILTER_INTENT_KEY = "Intent Key"
+        const val FILTER_SERVICE_KEY = "Service Key"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,13 +25,14 @@ class Clase4 : AppCompatActivity() {
         setContentView(R.layout.activity_clase4)
 
         ISButton.setOnClickListener{
-            Toast.makeText(this, "Intent Service is running", Toast.LENGTH_LONG).show()
             val intent = Intent(this, C4IntentService::class.java)
             startService(intent)
         }
 
         SButton.setOnClickListener{
-            Intent(this, C4Service::class.java).also { intent ->
+            for (i in 1..4) {
+                val intent = Intent(this, C4Service::class.java)
+                intent.putExtra("nroThread", i)
                 startService(intent)
             }
         }
@@ -58,18 +46,22 @@ class Clase4 : AppCompatActivity() {
     }
 
     override fun onStop() {
-        unregisterReceiver(mReceiver)
+        unregisterReceiver(IntentReceiver)
         super.onStop()
     }
 
 
     private fun setReceiver() {
-        mReceiver = ISReceiver(this)
+        IntentReceiver = ISReceiver(this)
+        ServiceReciver = SReceiver(this)
         var intentFilter = IntentFilter()
+        var serviceFilter = IntentFilter()
 
-        intentFilter.addAction(FILTER_ACTION_KEY)
+        intentFilter.addAction(FILTER_INTENT_KEY)
+        serviceFilter.addAction(FILTER_SERVICE_KEY)
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
+        LocalBroadcastManager.getInstance(this).registerReceiver(IntentReceiver, intentFilter)
+        LocalBroadcastManager.getInstance(this).registerReceiver(ServiceReciver, serviceFilter)
     }
 
 
@@ -86,6 +78,20 @@ class Clase4 : AppCompatActivity() {
             activity.ISResult.text = processNumber
         }
     }
+
+    class SReceiver (context:Clase4) : BroadcastReceiver() {
+
+        private val activityReference: WeakReference<Clase4> = WeakReference(context)
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val activity = activityReference.get()
+            if (activity == null || activity.isFinishing) return
+
+            val processNumber = intent.getStringExtra("ProcessNumber")
+            activity.SResult.text = processNumber
+        }
+    }
+
 }
 
 
