@@ -16,6 +16,7 @@ class Clase3 : AppCompatActivity() {
     var active = false
     var counter = 0
     val sharedPrefFile = "com.example.moviles.COUNTER_INFO"
+    var counterAsync : counterAsyncTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +30,14 @@ class Clase3 : AppCompatActivity() {
         stop.isEnabled = false
 
         start.setOnClickListener {
-            val counterAsync = counterAsyncTask(this)
-            counterAsync.execute()
+            counterAsync = counterAsyncTask(this)
+            counterAsync?.execute()
         }
 
         stop.setOnClickListener {
             active = false
             stop.isEnabled = false
+            counterAsync?.cancel(true)
         }
 
         resetButton.setOnClickListener{

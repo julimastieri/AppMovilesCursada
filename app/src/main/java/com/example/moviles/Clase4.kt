@@ -11,7 +11,6 @@ import java.lang.ref.WeakReference
 import android.content.ComponentName
 import android.os.IBinder
 import android.content.ServiceConnection
-import android.widget.Toast
 
 
 class Clase4 : AppCompatActivity() {
@@ -29,8 +28,6 @@ class Clase4 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clase4)
-
-        //setBoundService()
 
         ISButton.setOnClickListener{
             val intent = Intent(this, C4IntentService::class.java)
@@ -55,20 +52,20 @@ class Clase4 : AppCompatActivity() {
     }
 
     override fun onStart() {
-        setReceiver()
         super.onStart()
+        setReceiver()
         setBoundService()
     }
 
     override fun onStop() {
-        unregisterReceiver(IntentReceiver)
+        super.onStop()
+        //unregisterReceiver(IntentReceiver)
+        //unregisterReceiver(ServiceReciver)
 
         if(isBound){
-            unbindService(boundServiceConnection);
-            isBound = false;
+            unbindService(boundServiceConnection)
+            isBound = false
         }
-
-        super.onStop()
     }
 
 
@@ -129,7 +126,10 @@ class Clase4 : AppCompatActivity() {
             if (activity == null || activity.isFinishing) return
 
             val processNumber = intent.getStringExtra("ProcessNumber")
-            activity.SResult.text = activity.SResult.text.toString() + processNumber
+            if (activity.SResult.text == "")
+                activity.SResult.text = processNumber
+            else
+                activity.SResult.text = activity.SResult.text.toString() + ", " +processNumber
         }
     }
 

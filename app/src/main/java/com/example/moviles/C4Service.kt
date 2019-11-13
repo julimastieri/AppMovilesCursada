@@ -51,20 +51,15 @@ class C4Service : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND)
-            .apply {
-                start()
-
-                serviceLooper = looper
-                serviceHandler = ServiceHandler(looper)
+        Thread(Runnable {
+            serviceHandler?.obtainMessage()?.also { msg ->
+                msg.arg1 = startId
+                msg.arg2 = intent.getIntExtra("nroThread", 0)
+                serviceHandler?.sendMessage(msg)
             }
+        }).start()
 
 
-        serviceHandler?.obtainMessage()?.also { msg ->
-            msg.arg1 = startId
-            msg.arg2 = intent.getIntExtra("nroThread", 0)
-            serviceHandler?.sendMessage(msg)
-        }
 
         return START_STICKY
     }
