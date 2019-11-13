@@ -20,11 +20,15 @@ class C4Service : Service() {
         override fun handleMessage(msg: Message) {
 
             try {
-                Thread.sleep((Random.nextInt((100000 + 1) - 5000) +  5000).toLong())
+                Thread.sleep(1000)
 
             } catch (e: InterruptedException) {
                 Thread.currentThread().interrupt()
             }
+
+            val intent = Intent(Clase4.FILTER_SERVICE_KEY)
+            val nroThread = msg.arg2
+            LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent.putExtra("ProcessNumber", nroThread.toString()))
 
 
             stopSelf(msg.arg1)
@@ -32,6 +36,8 @@ class C4Service : Service() {
     }
 
     override fun onCreate() {
+
+        Toast.makeText(this, "Service ejecutandoce", Toast.LENGTH_SHORT).show()
 
         HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND)
         .apply {
@@ -45,12 +51,6 @@ class C4Service : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        intent.action = Clase4.FILTER_SERVICE_KEY
-        val nroThread = intent.getIntExtra("nroThread", 0)
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent.putExtra("ProcessNumber", nroThread.toString()))
-
-        println("nroThread: $nroThread")
-
         HandlerThread("ServiceStartArguments", Process.THREAD_PRIORITY_BACKGROUND)
             .apply {
                 start()
@@ -62,6 +62,7 @@ class C4Service : Service() {
 
         serviceHandler?.obtainMessage()?.also { msg ->
             msg.arg1 = startId
+            msg.arg2 = intent.getIntExtra("nroThread", 0)
             serviceHandler?.sendMessage(msg)
         }
 
@@ -73,6 +74,6 @@ class C4Service : Service() {
     }
 
     override fun onDestroy() {
-        Toast.makeText(this, "Service done", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Service Finalizado", Toast.LENGTH_SHORT).show()
     }
 }

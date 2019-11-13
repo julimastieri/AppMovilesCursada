@@ -38,6 +38,7 @@ class Clase4 : AppCompatActivity() {
         }
 
         SButton.setOnClickListener{
+            SResult.text = ""
             for (i in 1..4) {
                 val intent = Intent(this, C4Service::class.java)
                 intent.putExtra("nroThread", i)
@@ -46,7 +47,6 @@ class Clase4 : AppCompatActivity() {
         }
 
         BSButton.setOnClickListener(){
-            println(boundService?.randomNumber)
             val randomNumber = boundService?.randomNumber
             BSResult.text = randomNumber.toString()
 
@@ -129,7 +129,7 @@ class Clase4 : AppCompatActivity() {
             if (activity == null || activity.isFinishing) return
 
             val processNumber = intent.getStringExtra("ProcessNumber")
-            activity.SResult.text = processNumber
+            activity.SResult.text = activity.SResult.text.toString() + processNumber
         }
     }
 
