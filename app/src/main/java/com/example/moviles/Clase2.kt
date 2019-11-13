@@ -2,63 +2,60 @@ package com.example.moviles
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_clase2.*
 
 class Clase2 : AppCompatActivity() {
 
-    val GET_RESULT = 1
+    private val GETRESULT = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clase2)
 
-        //pasarle un valor que indique la operacion: FALTA!
-
         addButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
-            val operacion :String = "+"
-            val bundle : Bundle = Bundle()
+            val operacion = "+"
+            val bundle = Bundle()
             bundle.putString("operation", operacion)
             intent.putExtras(bundle)
-            startActivityForResult(intent, GET_RESULT)
+            startActivityForResult(intent, GETRESULT)
         }
 
         subtractionButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
-            val operacion :String = "-"
-            val bundle : Bundle = Bundle()
+            val operacion = "-"
+            val bundle = Bundle()
             bundle.putString("operation", operacion)
             intent.putExtras(bundle)
-            startActivityForResult(intent, GET_RESULT)
+            startActivityForResult(intent, GETRESULT)
         }
 
         multiplicationButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
-            val operacion :String = "*"
-            val bundle : Bundle = Bundle()
+            val operacion = "*"
+            val bundle = Bundle()
             bundle.putString("operation", operacion)
             intent.putExtras(bundle)
-            startActivityForResult(intent, GET_RESULT)
+            startActivityForResult(intent, GETRESULT)
         }
 
         divisionButton.setOnClickListener {
             val intent = Intent(this, Clase2SegundaActivity::class.java)
-            val operacion :String = "/"
-            val bundle : Bundle = Bundle()
+            val operacion = "/"
+            val bundle = Bundle()
             bundle.putString("operation", operacion)
             intent.putExtras(bundle)
-            startActivityForResult(intent, GET_RESULT)
+            startActivityForResult(intent, GETRESULT)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if ((requestCode == GET_RESULT) && (resultCode == Activity.RESULT_OK)) {
-            var bundle = data?.extras
-            var resultado = bundle?.getString("result")
+        if ((requestCode == GETRESULT) && (resultCode == Activity.RESULT_OK)) {
+            val bundle = data?.extras
+            val resultado = bundle?.getString("result")
             valueTextView.text = resultado
         }
     }

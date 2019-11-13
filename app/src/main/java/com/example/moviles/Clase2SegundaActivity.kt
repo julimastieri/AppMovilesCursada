@@ -1,7 +1,5 @@
 package com.example.moviles
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_clase2_segunda.*
@@ -9,11 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.content.Intent
 import android.widget.Toast
-
-
-
-
-
 
 
 class Clase2SegundaActivity : AppCompatActivity() {
@@ -32,7 +25,7 @@ class Clase2SegundaActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable) {
 
-                if (value1.text.toString().length <= 0)
+                if (value1.text.toString().isEmpty())
                     value1.error = "No puede ser vacio"
                 else
                     value1.error = null
@@ -49,7 +42,7 @@ class Clase2SegundaActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable) {
 
-                if (value2.text.toString().length <= 0)
+                if (value2.text.toString().isEmpty())
                     value2.error = "No puede ser vacio"
                 else
                     value2.error = null
@@ -57,35 +50,33 @@ class Clase2SegundaActivity : AppCompatActivity() {
         })
 
         //leer operacion a realizar
-        var bundle = intent.extras
-        var operacion = bundle?.getString("operation")
+        val bundle = intent.extras
+        val operacion = bundle?.getString("operation")
 
         operationTextView.text = operacion
 
         doneButton.setOnClickListener {
 
-           if ( (value1.text.toString().length > 0) && (value2.text.toString().length > 0) ) {
+           if ( (value1.text.toString().isNotEmpty()) && (value2.text.toString().isNotEmpty()) ) {
                intent = Intent()
-               if (operacion == "+")
-                   intent.putExtra(
+               when (operacion) {
+                   "+" -> intent.putExtra(
                        "result",
                        (value1.text.toString().toDouble() + value2.text.toString().toDouble()).toString()
                    )
-               else if (operacion == "-")
-                   intent.putExtra(
+                   "-" -> intent.putExtra(
                        "result",
                        (value1.text.toString().toDouble() - value2.text.toString().toDouble()).toString()
                    )
-               else if (operacion == "*")
-                   intent.putExtra(
+                   "*" -> intent.putExtra(
                        "result",
                        (value1.text.toString().toDouble() * value2.text.toString().toDouble()).toString()
                    )
-               else if (operacion == "/")
-                   intent.putExtra(
+                   "/" -> intent.putExtra(
                        "result",
                        (value1.text.toString().toDouble() / value2.text.toString().toDouble()).toString()
                    )
+               }
 
                setResult(RESULT_OK, intent)
                finish()
@@ -95,30 +86,5 @@ class Clase2SegundaActivity : AppCompatActivity() {
         }
 
     }
-
-    /*
-    public override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putString("value1",value1.text.toString())
-        outState.putString("value2",value2.text.toString())
-
-    }
-
-    @SuppressLint("ResourceType")
-    public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val v1 = savedInstanceState.getString("value1")
-        val v2 = savedInstanceState.getString("value2")
-
-
-        //ninguna de las dos formas funcionan
-        //value1.text = Editable.Factory.getInstance().newEditable(v1)
-
-        //value2.setText(v2)
-
-        }
-
-     */
 }
 

@@ -8,7 +8,7 @@ class C4IntentService : IntentService("IntentService") {
 
     override fun onHandleIntent(intent: Intent?) {
 
-        intent?.action = Clase4.FILTER_INTENT_KEY
+        intent?.action = Clase4.FILTER_KEY
 
         for (i in 1..4) {
             //Envio el nro de proceso que se está procesando

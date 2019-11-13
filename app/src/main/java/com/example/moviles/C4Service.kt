@@ -3,10 +3,8 @@ package com.example.moviles
 import android.app.Service
 import android.content.Intent
 import android.os.*
-import android.util.Log
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import kotlin.random.Random
 
 
 class C4Service : Service() {
@@ -26,9 +24,9 @@ class C4Service : Service() {
                 Thread.currentThread().interrupt()
             }
 
-            val intent = Intent(Clase4.FILTER_SERVICE_KEY)
+            val intent = Intent(Clase4.FILTER_KEY)
             val nroThread = msg.arg2
-            LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent.putExtra("ProcessNumber", nroThread.toString()))
+            LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent.putExtra("ServiceResult", nroThread.toString()))
 
 
             stopSelf(msg.arg1)

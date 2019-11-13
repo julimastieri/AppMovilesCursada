@@ -12,11 +12,10 @@ import android.content.Context
 
 class Clase3 : AppCompatActivity() {
 
-    val TAG = "Clase3"
     var active = false
     var counter = 0
-    val sharedPrefFile = "com.example.moviles.COUNTER_INFO"
-    var counterAsync : counterAsyncTask? = null
+    private val sharedPrefFile = "com.example.moviles.COUNTER_INFO"
+    private var counterAsync : CounterAsyncTask? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +29,7 @@ class Clase3 : AppCompatActivity() {
         stop.isEnabled = false
 
         start.setOnClickListener {
-            counterAsync = counterAsyncTask(this)
+            counterAsync = CounterAsyncTask(this)
             counterAsync?.execute()
         }
 
@@ -49,7 +48,7 @@ class Clase3 : AppCompatActivity() {
     }
 
 
-        class counterAsyncTask internal constructor(context: Clase3) : AsyncTask<Void, Int, Void>()
+        class CounterAsyncTask internal constructor(context: Clase3) : AsyncTask<Void, Int, Void>()
         {
 
                 private val activityReference: WeakReference<Clase3> = WeakReference(context)
@@ -99,18 +98,20 @@ class Clase3 : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState.putString("start",active.toString())
+        outState.putString("counterText", counterText.text.toString())
         stop.isEnabled = false
         active = false
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        var v1 = savedInstanceState.getString("start")
 
-        if (v1 == "true")
+        counterText.text = savedInstanceState.getString("counterText")
+        val v1 = savedInstanceState.getString("start")
+        if (v1 == "true"){
             start.callOnClick()
+        }
     }
-
 
     override fun onPause() {
         super.onPause()

@@ -15,11 +15,9 @@ import android.content.ServiceConnection
 
 class Clase4 : AppCompatActivity() {
 
-    var  IntentReceiver : ISReceiver = ISReceiver(this)
-    var ServiceReciver : SReceiver = SReceiver(this)
+    private var  mReceiver : MyReceiver = MyReceiver(this)
     companion object {
-        const val FILTER_INTENT_KEY = "Intent Key"
-        const val FILTER_SERVICE_KEY = "Service Key"
+        const val FILTER_KEY = "Key"
     }
 
     var boundService: C4BoundService? = null
@@ -43,7 +41,7 @@ class Clase4 : AppCompatActivity() {
             }
         }
 
-        BSButton.setOnClickListener(){
+        BSButton.setOnClickListener{
             val randomNumber = boundService?.randomNumber
             BSResult.text = randomNumber.toString()
 
@@ -59,8 +57,7 @@ class Clase4 : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(IntentReceiver)
-        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(ServiceReciver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(mReceiver)
 
         if(isBound){
             unbindService(boundServiceConnection)
@@ -70,16 +67,13 @@ class Clase4 : AppCompatActivity() {
 
 
     private fun setReceiver() {
-        IntentReceiver = ISReceiver(this)
-        ServiceReciver = SReceiver(this)
-        var intentFilter = IntentFilter()
-        var serviceFilter = IntentFilter()
+        mReceiver = MyReceiver(this)
 
-        intentFilter.addAction(FILTER_INTENT_KEY)
-        serviceFilter.addAction(FILTER_SERVICE_KEY)
+        val intentFilter = IntentFilter()
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(IntentReceiver, intentFilter)
-        LocalBroadcastManager.getInstance(this).registerReceiver(ServiceReciver, serviceFilter)
+        intentFilter.addAction(FILTER_KEY)
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, intentFilter)
     }
 
     private fun setBoundService(){
@@ -104,7 +98,7 @@ class Clase4 : AppCompatActivity() {
     }
 
 
-    class ISReceiver (context:Clase4) : BroadcastReceiver() {
+    class MyReceiver (context:Clase4) : BroadcastReceiver() {
 
         private val activityReference: WeakReference<Clase4> = WeakReference(context)
 
@@ -113,26 +107,36 @@ class Clase4 : AppCompatActivity() {
             if (activity == null || activity.isFinishing) return
 
             val processNumber = intent.getStringExtra("ProcessNumber")
-            activity.ISResult.text = processNumber
+            if ( (processNumber != "") && (processNumber != null) )
+                activity.ISResult.text = processNumber
+
+
+            val serviceResult = intent.getStringExtra("ServiceResult")
+            if (serviceResult != null)
+                if (activity.SResult.text == "")
+                    activity.SResult.text = serviceResult
+                else
+                    activity.SResult.text = activity.SResult.text.toString() + ", " +serviceResult
         }
     }
 
-    class SReceiver (context:Clase4) : BroadcastReceiver() {
+    public override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
 
-        private val activityReference: WeakReference<Clase4> = WeakReference(context)
-
-        override fun onReceive(context: Context, intent: Intent) {
-            val activity = activityReference.get()
-            if (activity == null || activity.isFinishing) return
-
-            val processNumber = intent.getStringExtra("ProcessNumber")
-            if (activity.SResult.text == "")
-                activity.SResult.text = processNumber
-            else
-                activity.SResult.text = activity.SResult.text.toString() + ", " +processNumber
-        }
+        outState.putString("ISResult",ISResult.text.toString())
+        outState.putString("SResult",SResult.text.toString())
+        outState.putString("BSResult",BSResult.text.toString())
     }
 
+    public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        ISResult.text = savedInstanceState.getString("ISResult")
+        SResult.text = savedInstanceState.getString("SResult")
+        BSResult.text = savedInstanceState.getString("BSResult")
+
+
+    }
 }
 
 
