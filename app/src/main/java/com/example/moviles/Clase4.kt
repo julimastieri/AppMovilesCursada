@@ -59,8 +59,8 @@ class Clase4 : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        //unregisterReceiver(IntentReceiver)
-        //unregisterReceiver(ServiceReciver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(IntentReceiver)
+        LocalBroadcastManager.getInstance(applicationContext).unregisterReceiver(ServiceReciver)
 
         if(isBound){
             unbindService(boundServiceConnection)
